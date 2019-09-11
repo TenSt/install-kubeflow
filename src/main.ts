@@ -37,7 +37,7 @@ async function run() {
   getInputs()
   args = ['cluster-info'];
   await commandRun('kubectl', args);
-  args = ['create', 'namespace', 'kubeflow-anonymous', '--dry-run', '-o', 'yaml', '>', 'ns.yaml'];
+  args = ['create', 'namespace', 'kubeflow-anonymous', '--dry-run -o yaml', '>', 'ns.yaml'];
   await commandRun('kubectl', args);
   args = ['apply', '-f', 'ns.yaml'];
   await commandRun('kubectl', args);
