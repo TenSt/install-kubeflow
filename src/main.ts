@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-//import * as exec from '@actions/exec';
+import * as exec from '@actions/exec';
 import { ToolRunner } from "@actions/exec/lib/toolrunner";
 
 async function getInputs() {
@@ -21,8 +21,7 @@ async function commandRun(path: string ,args: string[]) {
   if (path == '../kfctl') {
     cwd = '/home/runner/work/install-kubeflow/install-kubeflow/kubeflow';
   }
-  args = ['.'];
-  await commandRun('pwd', args);
+  exec.exec('pwd')
   const toolRunner = new ToolRunner(path, args, {cwd: cwd});
   core.debug(msg);
   const code = await toolRunner.exec();
