@@ -17,6 +17,7 @@ async function commandRun(path: string ,args: string[]) {
   let msg = path
   while (i < args.length-1) {
     msg = msg + " " + args[i]
+    i++
   }
   const toolRunner = new ToolRunner(path, args);
   core.debug(msg);
