@@ -37,10 +37,7 @@ async function run() {
   getInputs()
   args = ['cluster-info'];
   await commandRun('kubectl', args);
-  await exec.exec('kubectl create namespace kubeflow-anonymous --dry-run -o yaml > ns.yaml')
-  // args = ['create', 'namespace', 'kubeflow-anonymous', '--dry-run', '-o', 'yaml', '>', 'ns.yaml'];
-  // await commandRun('kubectl', args);
-  args = ['apply', '-f', 'ns.yaml'];
+  args = ['create', 'namespace', 'kubeflow-anonymous'];
   await commandRun('kubectl', args);
   let kfapp = 'kubeflow';
   let config = '--config=' + core.getInput('config');
