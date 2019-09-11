@@ -37,7 +37,7 @@ async function run() {
   let config = '--config=' + core.getInput('config');
   args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
-  await exec.exec('cd $KFAPP')
+  await exec.exec('cd ' + kfapp)
   args = ['generate', 'all', '-V'];
   await commandRun('./kfctl', args);
   args = ['apply', 'all', '-V'];
