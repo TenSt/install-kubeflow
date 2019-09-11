@@ -13,11 +13,9 @@ async function getInputs() {
 }
 
 async function commandRun(path: string ,args: string[]) {
-  let i = 0
-  let msg = path
-  while (i < args.length-1) {
-    msg = msg + " " + args[i]
-    i++
+  let msg = path;
+  for (let index = 0; index < args.length; index++) {
+    msg = msg + " " + args[index];
   }
   const toolRunner = new ToolRunner(path, args);
   core.debug(msg);
