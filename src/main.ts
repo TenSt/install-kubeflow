@@ -13,7 +13,7 @@ async function getInputs() {
 }
 
 async function commandRun(path: string ,args: string[]) {
-  let msg = path;
+  let msg = "  " + path;
   for (let index = 0; index < args.length; index++) {
     msg = msg + " " + args[index];
   }
@@ -31,12 +31,11 @@ async function run() {
   args = ['-xvf', 'kfctl_v0.6.2_linux.tar.gz'];
   await commandRun('tar', args);
   getInputs()
-  await exec.exec('echo $KFAPP')
-  await exec.exec('echo $CONFIG')
-  await exec.exec('echo $KUBEFLOW_USER_EMAIL')
   args = ['cluster-info'];
   await commandRun('kubectl', args);
-  args = ['init', '$KFAPP', '--config=$CONFIG', '-V'];
+  let kfapp = 'kubeflow';
+  let config = '--config=' + core.getInput('config');
+  args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
   await exec.exec('cd $KFAPP')
   args = ['generate', 'all', '-V'];
