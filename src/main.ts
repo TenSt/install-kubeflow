@@ -1,7 +1,6 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import { ToolRunner } from "@actions/exec/lib/toolrunner";
-import { CodeGenerator } from '@babel/generator';
 
 async function getInputs() {
   const config = core.getInput('config');
@@ -14,36 +13,33 @@ async function getInputs() {
 }
 
 async function commandRun(path: string ,args: string[]) {
-  // let msg = path;
-  // for (let index = 0; index < args.length; index++) {
-  //   msg = msg + " " + args[index];
-  // }
-  // const toolRunner = new ToolRunner(path, args);
-  // core.debug(msg);
-  // const code = await toolRunner.exec();
-  // if (code != 0) {
-  //     throw new Error('Command: \n' + msg + '\nFAILED.')
-  // }
-  
+  let msg = path;
+  for (let index = 0; index < args.length; index++) {
+    msg = msg + " " + args[index];
+  }
+  const toolRunner = new ToolRunner(path, args);
+  core.debug(msg);
+  const code = await toolRunner.exec();
+  if (code != 0) {
+      throw new Error('Command: \n' + msg + '\nFAILED.')
+  }
 }
 
 async function run() {
-  // let args = ['https://github.com/kubeflow/kubeflow/releases/download/v0.6.2/kfctl_v0.6.2_linux.tar.gz'];
-  // // await commandRun('wget', args);
-  // args = ['-xvf', 'kfctl_v0.6.2_linux.tar.gz'];
-  // // await commandRun('tar', args);
-  // // getInputs()
-  // args = ['cluster-info'];
-  // // await commandRun('kubectl', args);
-  // args = ['init', '${KFAPP}', '--config=${CONFIG}', '-V'];
-  // // await commandRun('./kfctl', args);
-  // // await exec.exec('cd ${KFAPP}')
-  // // args = ['generate', 'all', '-V'];
-  // // await commandRun('./kfctl', args);
-  // // args = ['apply', 'all', '-V'];
-  // // await commandRun('./kfctl', args);
-
-  // core.debug(args.length.toString())
+  let args = ['https://github.com/kubeflow/kubeflow/releases/download/v0.6.2/kfctl_v0.6.2_linux.tar.gz'];
+  await commandRun('wget', args);
+  args = ['-xvf', 'kfctl_v0.6.2_linux.tar.gz'];
+  await commandRun('tar', args);
+  getInputs()
+  args = ['cluster-info'];
+  await commandRun('kubectl', args);
+  args = ['init', '${KFAPP}', '--config=${CONFIG}', '-V'];
+  await commandRun('./kfctl', args);
+  await exec.exec('cd ${KFAPP}')
+  args = ['generate', 'all', '-V'];
+  await commandRun('./kfctl', args);
+  args = ['apply', 'all', '-V'];
+  await commandRun('./kfctl', args);
 }
 
 run();
