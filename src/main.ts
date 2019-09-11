@@ -24,24 +24,26 @@ async function commandRun(path: string ,args: string[]) {
   // if (code != 0) {
   //     throw new Error('Command: \n' + msg + '\nFAILED.')
   // }
-  core.debug(args.length.toString())
+  
 }
 
 async function run() {
   let args = ['https://github.com/kubeflow/kubeflow/releases/download/v0.6.2/kfctl_v0.6.2_linux.tar.gz'];
-  await commandRun('wget', args);
+  // await commandRun('wget', args);
   args = ['-xvf', 'kfctl_v0.6.2_linux.tar.gz'];
-  await commandRun('tar', args);
-  getInputs()
+  // await commandRun('tar', args);
+  // getInputs()
   args = ['cluster-info'];
-  await commandRun('kubectl', args);
+  // await commandRun('kubectl', args);
   args = ['init', '${KFAPP}', '--config=${CONFIG}', '-V'];
-  await commandRun('./kfctl', args);
-  await exec.exec('cd ${KFAPP}')
-  args = ['generate', 'all', '-V'];
-  await commandRun('./kfctl', args);
-  args = ['apply', 'all', '-V'];
-  await commandRun('./kfctl', args);
+  // await commandRun('./kfctl', args);
+  // await exec.exec('cd ${KFAPP}')
+  // args = ['generate', 'all', '-V'];
+  // await commandRun('./kfctl', args);
+  // args = ['apply', 'all', '-V'];
+  // await commandRun('./kfctl', args);
+
+  core.debug(args.length.toString())
 }
 
 run();
