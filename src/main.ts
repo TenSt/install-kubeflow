@@ -31,11 +31,14 @@ async function run() {
   args = ['-xvf', 'kfctl_v0.6.2_linux.tar.gz'];
   await commandRun('tar', args);
   getInputs()
+  await exec.exec('echo $KFAPP')
+  await exec.exec('echo $CONFIG')
+  await exec.exec('echo $KUBEFLOW_USER_EMAIL')
   args = ['cluster-info'];
   await commandRun('kubectl', args);
-  args = ['init', '${KFAPP}', '--config=${CONFIG}', '-V'];
+  args = ['init', '$KFAPP', '--config=$CONFIG', '-V'];
   await commandRun('./kfctl', args);
-  await exec.exec('cd ${KFAPP}')
+  await exec.exec('cd $KFAPP')
   args = ['generate', 'all', '-V'];
   await commandRun('./kfctl', args);
   args = ['apply', 'all', '-V'];
