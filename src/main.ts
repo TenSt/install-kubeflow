@@ -37,16 +37,18 @@ async function run() {
   getInputs()
   args = ['cluster-info'];
   await commandRun('kubectl', args);
+  args = ['create', 'namespace', 'kubeflow-anonymous', '--dry-run', '-o', 'yaml', '>', 'ns.yaml'];
+  await commandRun('kubectl', args);
+  args = ['apply', '-f', 'ns.yaml'];
+  await commandRun('kubectl', args);
   let kfapp = 'kubeflow';
   let config = '--config=' + core.getInput('config');
   args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
   args = ['generate', 'all', '-V'];
   await commandRun('../kfctl', args);
-  args = ['-lsa', './kubeflow'];
-  await commandRun('ls', args);
-  // args = ['apply', 'all', '-V'];
-  // await commandRun('../kfctl', args);
+  args = ['apply', 'all', '-V'];
+  await commandRun('../kfctl', args);
 }
 
 run();
