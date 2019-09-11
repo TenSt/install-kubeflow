@@ -17,7 +17,7 @@ async function commandRun(path: string ,args: string[]) {
   for (let index = 0; index < args.length; index++) {
     msg = msg + " " + args[index];
   }
-  const toolRunner = new ToolRunner(path, args);
+  const toolRunner = new ToolRunner(path, args, {cwd: '/home/runner/work/install-kubeflow/install-kubeflow'});
   core.debug(msg);
   const code = await toolRunner.exec();
   if (code != 0) {
