@@ -21,7 +21,6 @@ async function commandRun(path: string ,args: string[]) {
   if (path == '../kfctl') {
     cwd = '/home/runner/work/install-kubeflow/install-kubeflow/kubeflow';
   }
-  exec.exec('pwd')
   const toolRunner = new ToolRunner(path, args, {cwd: cwd});
   core.debug(msg);
   const code = await toolRunner.exec();
@@ -42,12 +41,10 @@ async function run() {
   let config = '--config=' + core.getInput('config');
   args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
-  args = ['-lsa'];
-  await commandRun('ls', args);
-  args = ['.'];
-  await commandRun('pwd', args);
   args = ['generate', 'all', '-V'];
   await commandRun('../kfctl', args);
+  args = ['-lsa', './kubeflow'];
+  await commandRun('ls', args);
   // args = ['apply', 'all', '-V'];
   // await commandRun('../kfctl', args);
 }
