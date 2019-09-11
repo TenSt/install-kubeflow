@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import { ToolRunner } from "@actions/exec/lib/toolrunner";
+import { CodeGenerator } from '@babel/generator';
 
 async function getInputs() {
   const config = core.getInput('config');
@@ -13,16 +14,17 @@ async function getInputs() {
 }
 
 async function commandRun(path: string ,args: string[]) {
-  let msg = path;
-  for (let index = 0; index < args.length; index++) {
-    msg = msg + " " + args[index];
-  }
-  const toolRunner = new ToolRunner(path, args);
-  core.debug(msg);
-  const code = await toolRunner.exec();
-  if (code != 0) {
-      throw new Error('Command: \n' + msg + '\nFAILED.')
-  }
+  // let msg = path;
+  // for (let index = 0; index < args.length; index++) {
+  //   msg = msg + " " + args[index];
+  // }
+  // const toolRunner = new ToolRunner(path, args);
+  // core.debug(msg);
+  // const code = await toolRunner.exec();
+  // if (code != 0) {
+  //     throw new Error('Command: \n' + msg + '\nFAILED.')
+  // }
+  core.debug(args.length.toString())
 }
 
 async function run() {
