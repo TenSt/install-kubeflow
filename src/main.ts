@@ -37,12 +37,14 @@ async function run() {
   let config = '--config=' + core.getInput('config');
   args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
-  args = [kfapp];
-  await commandRun('cd', args);
-  args = ['generate', 'all', '-V'];
-  await commandRun('./kfctl', args);
-  args = ['apply', 'all', '-V'];
-  await commandRun('./kfctl', args);
+  args = ['-lsa'];
+  await commandRun('ls', args);
+  args = ['.'];
+  await commandRun('pwd', args);
+  // args = ['generate', 'all', '-V'];
+  // await commandRun('./kfctl', args);
+  // args = ['apply', 'all', '-V'];
+  // await commandRun('./kfctl', args);
 }
 
 run();
