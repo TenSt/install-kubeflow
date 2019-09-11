@@ -41,6 +41,8 @@ async function run() {
   await commandRun('ls', args);
   args = ['.'];
   await commandRun('pwd', args);
+  args = ['kubeflow'];
+  await commandRun('cd', args);
   // args = ['generate', 'all', '-V'];
   // await commandRun('./kfctl', args);
   // args = ['apply', 'all', '-V'];
