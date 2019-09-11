@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import * as exec from '@actions/exec';
+//import * as exec from '@actions/exec';
 import { ToolRunner } from "@actions/exec/lib/toolrunner";
 
 async function getInputs() {
@@ -37,7 +37,8 @@ async function run() {
   let config = '--config=' + core.getInput('config');
   args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
-  await exec.exec('cd ' + kfapp)
+  args = [kfapp];
+  await commandRun('cd', args);
   args = ['generate', 'all', '-V'];
   await commandRun('./kfctl', args);
   args = ['apply', 'all', '-V'];
