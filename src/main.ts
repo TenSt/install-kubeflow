@@ -17,7 +17,13 @@ async function commandRun(path: string ,args: string[]) {
   for (let index = 0; index < args.length; index++) {
     msg = msg + " " + args[index];
   }
-  const toolRunner = new ToolRunner(path, args, {cwd: '/home/runner/work/install-kubeflow/install-kubeflow'});
+  let cwd = '/home/runner/work/install-kubeflow/install-kubeflow';
+  if (path == '../kfctl') {
+    cwd = '/home/runner/work/install-kubeflow/install-kubeflow/kubeflow';
+  }
+  args = ['.'];
+  await commandRun('pwd', args);
+  const toolRunner = new ToolRunner(path, args, {cwd: cwd});
   core.debug(msg);
   const code = await toolRunner.exec();
   if (code != 0) {
@@ -41,12 +47,10 @@ async function run() {
   await commandRun('ls', args);
   args = ['.'];
   await commandRun('pwd', args);
-  args = ['kubeflow'];
-  await commandRun('cd', args);
-  // args = ['generate', 'all', '-V'];
-  // await commandRun('./kfctl', args);
+  args = ['generate', 'all', '-V'];
+  await commandRun('../kfctl', args);
   // args = ['apply', 'all', '-V'];
-  // await commandRun('./kfctl', args);
+  // await commandRun('../kfctl', args);
 }
 
 run();
