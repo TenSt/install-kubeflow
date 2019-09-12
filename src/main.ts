@@ -13,12 +13,15 @@ async function getInputs() {
 }
 
 async function commandRun(path: string ,args: string[]) {
-  let i = 0
-  let msg = path
-  while (i < args.length) {
-    msg = msg + " " + args[i]
+  let msg = "  " + path;
+  for (let index = 0; index < args.length; index++) {
+    msg = msg + " " + args[index];
   }
-  const toolRunner = new ToolRunner(path, args);
+  let cwd = '/home/runner/work/install-kubeflow/install-kubeflow';
+  if (path == '../kfctl') {
+    cwd = '/home/runner/work/install-kubeflow/install-kubeflow/kubeflow';
+  }
+  const toolRunner = new ToolRunner(path, args, {cwd: cwd});
   core.debug(msg);
   const code = await toolRunner.exec();
   if (code != 0) {
@@ -34,13 +37,16 @@ async function run() {
   getInputs()
   args = ['cluster-info'];
   await commandRun('kubectl', args);
-  args = ['init', '${KFAPP}', '--config=${CONFIG}', '-V'];
+  args = ['create', 'namespace', 'kubeflow-anonymous'];
+  await commandRun('kubectl', args);
+  let kfapp = 'kubeflow';
+  let config = '--config=' + core.getInput('config');
+  args = ['init', kfapp, config, '-V'];
   await commandRun('./kfctl', args);
-  await exec.exec('cd ${KFAPP}')
   args = ['generate', 'all', '-V'];
-  await commandRun('./kfctl', args);
+  await commandRun('../kfctl', args);
   args = ['apply', 'all', '-V'];
-  await commandRun('./kfctl', args);
+  await commandRun('../kfctl', args);
 }
 
 run();
