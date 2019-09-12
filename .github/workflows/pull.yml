@@ -5,13 +5,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
     - name: Set context
       uses: azure/k8s-actions/k8s-set-context@master
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
     - name: Deploy Kubeflow
-      uses: ventus-ag/install-kubeflow/install-kubeflow@releases/v1
+      uses: ventus-ag/install-kubeflow@releases/v1
       with:
         config: "https://raw.githubusercontent.com/kubeflow/kubeflow/v0.6-branch/bootstrap/config/kfctl_existing_arrikto.0.6.2.yaml"
         username: "stepan.maksymchuk@ventus.ag"
