@@ -10,7 +10,7 @@ jobs:
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
     - name: Deploy Kubeflow
-      uses: TenSt/install-kubeflow@tenst-patch-1
+      uses: ventus-ag/install-kubeflow/install-kubeflow@releases/v1
       with:
         config: "https://raw.githubusercontent.com/kubeflow/kubeflow/v0.6-branch/bootstrap/config/kfctl_existing_arrikto.0.6.2.yaml"
         username: "stepan.maksymchuk@ventus.ag"
